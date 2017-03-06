@@ -1,6 +1,7 @@
 require 'pry'
 require 'terminal-table'
 require './player'
+require './generate_ships'
 
 module Battleship
   class Game
@@ -11,6 +12,17 @@ module Battleship
       puts "Player 2"
       @player_2 = Player.new
       @player_1_turn = true
+
+      @table_array = [["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9", "A10"], 
+                   ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10"], 
+                   ["C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10"], 
+                   ["D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "D10"], 
+                   ["E1", "E2", "E3", "E4", "E5", "E6", "E7", "E8", "E9", "E10"], 
+                   ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10"], 
+                   ["G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8", "G9", "G10"], 
+                   ["H1", "H2", "H3", "H4", "H5", "H6", "H7", "H8", "H9", "H10"], 
+                   ["I1", "I2", "I3", "I4", "I5", "I6", "I7", "I8", "I9", "I10"], 
+                   ["J1", "J2", "J3", "J4", "J5", "J6", "J7", "J8", "J9", "J10"]]
     end
 
     def create_table(arr)
@@ -51,12 +63,28 @@ module Battleship
     def choose_convoy_locations(player)
       @player_1_turn ? (puts "#{@player_1.name}:") : (puts "#{@player_2.name}:")
 
-      puts "Choose 17 locations to place a ship"
-      2.times do |x|
-        puts "Position #{x+1}:"
-        answer = gets.chomp.upcase
-        player.table[answer] = "ship"
-      end
+      # 1 Aircraft Carrier, 5 spots
+      puts "Starting with you Aircraft Carrier, which takes up 5 spaces:"
+      choose_axis(5)
+      # 1 Battleship, 4 spots
+      puts "Now for your battleship, which takes up 4 spaces:"
+      choose_axis(4)
+      # 1 Destroyer, 3 spots
+      puts "Your Aircraft Carrier, which takes up 3 spaces:"
+      choose_axis(3)
+      # 1 Submarine, 3 spots
+      puts "Your Submarine, which also takes up 3 spaces:"
+      choose_axis(3) 
+      # 1 Patrol Boat, 2 spots
+      puts "Your Patrol Boat, which takes up 5 spaces:"
+      choose_axis(2)
+
+      # puts "Choose 17 locations to place a ship"
+      # 2.times do |x|
+      #   puts "Position #{x+1}:"
+      #   answer = gets.chomp.upcase
+      #   player.table[answer] = "ship"
+      # end
     end
 
     def turn
