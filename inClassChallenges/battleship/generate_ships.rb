@@ -136,7 +136,9 @@ module Battleship
     end
 
     def choose_axis(ship_length, player)
-      puts "Please enter the axis where you would like to lay your ship and I'll provide the other possible options."
+      hash_to_arr(player.table)
+
+      puts "Please enter the axis where you would like to lay your ship. (ex. 'A1', 'J10')"
       answer = gets.chomp.upcase
 
       if player.table.key?(answer)
