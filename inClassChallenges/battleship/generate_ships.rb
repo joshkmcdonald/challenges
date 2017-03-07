@@ -143,7 +143,7 @@ module Battleship
         show_ship_placement_possibilities(answer, ship_length)
       else
         puts "That axis does not exist. Please try again."
-        choose_axis(ship_length)
+        choose_axis(ship_length, player)
       end
     end
 
@@ -243,7 +243,7 @@ module Battleship
         true_false_arr = []
 
         inner_arr.each do |position|
-          if (hash[position] == "ship" || hash[position] == "miss" || hash[position] == "hit" || hash[position] == nil)
+          if (hash[position] == "🚢" || hash[position] == "miss" || hash[position] == "hit" || hash[position] == nil)
             true_false_arr << "true"   
           else
             true_false_arr << "false"

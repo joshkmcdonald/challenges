@@ -64,7 +64,7 @@ module Battleship
       hash_to_arr(@player_2)
 
       change_player
-      
+
       turn
     end
 
@@ -116,7 +116,7 @@ module Battleship
       
       if answer <= num && answer > 0
         array[answer - 1].each do |x|
-          player.table[x] = 'ship'
+          player.table[x] = '🚢'
         end
       else
         puts "please type a number between 1 and #{num}"
@@ -125,7 +125,7 @@ module Battleship
     end
 
     def turn
-      if @player_1.table.value?("ship") && @player_2.table.value?("ship") 
+      if @player_1.table.value?("🚢") && @player_2.table.value?("🚢") 
         if @player_1_turn
           puts "Player 1:"
           get_bombing_decision
@@ -134,6 +134,10 @@ module Battleship
           get_bombing_decision
         end
       else
+        puts "Player 1 final grid:"
+        hash_to_arr(@player_1)
+        puts "Player 2 final grid:"
+        hash_to_arr(@player_2)
         @player_1_turn ? (puts "Player 2 wins") : (puts "Player 1 wins")
       end
     end
@@ -155,21 +159,21 @@ module Battleship
     def bomb_player_location(location, player)
       if player.table.include?(location)
         case player.table[location]
-        when "ship"
-          puts "that was a hit"
-          player.table[location] = 'hit'
+        when "🚢"
+          puts "that was a hit 💥"
+          player.table[location] = '💥'
           change_player
           turn
 
-        when "miss"
+        when "🤡"
           puts "You've already shot that location. Please choose another."
           turn
-        when "hit"
+        when "💥"
           puts "You've already made a hit at that location. Please choose another."
           turn
         else
-          puts "That was a miss."
-          player.table[location] = 'miss'
+          puts "That was a miss 🤡."
+          player.table[location] = '🤡'
           change_player
           turn
         end

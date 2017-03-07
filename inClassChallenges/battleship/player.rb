@@ -14,7 +14,7 @@ module Battleship
 
       ("A".."J").each do |x|
         (1..10).each do |y|
-           hash["#{x}#{y}"] = "water"
+           hash["#{x}#{y}"] = "💧"
         end
       end
       hash
