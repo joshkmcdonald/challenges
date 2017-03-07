@@ -25,6 +25,12 @@ module Battleship
                    ["J1", "J2", "J3", "J4", "J5", "J6", "J7", "J8", "J9", "J10"]]
     end
 
+    def print_array_of_arrays(array)
+      array.each do |inner_array|
+        p inner_array
+      end
+    end
+
     def create_table(arr)
       rows = []
 
@@ -48,15 +54,17 @@ module Battleship
     end
 
     def setup
+      
       choose_convoy_locations(@player_1)
       hash_to_arr(@player_1)
 
-      @player_1_turn = false
+      change_player
 
       choose_convoy_locations(@player_2)
       hash_to_arr(@player_2)
 
-      @player_1_turn = true
+      change_player
+      
       turn
     end
 
@@ -64,20 +72,20 @@ module Battleship
       @player_1_turn ? (puts "#{@player_1.name}:") : (puts "#{@player_2.name}:")
 
       # 1 Aircraft Carrier, 5 spots
-      puts "Starting with you Aircraft Carrier, which takes up 5 spaces:"
-      choose_axis(5)
+      puts "Starting with your Aircraft Carrier, which takes up 5 spaces,"
+      choose_final_ship_placement(choose_axis(5, player), player)
       # 1 Battleship, 4 spots
-      puts "Now for your battleship, which takes up 4 spaces:"
-      choose_axis(4)
+      puts "Now for your battleship, which takes up 4 spaces,"
+      choose_final_ship_placement(choose_axis(4, player), player)
       # 1 Destroyer, 3 spots
-      puts "Your Aircraft Carrier, which takes up 3 spaces:"
-      choose_axis(3)
+      puts "Your Aircraft Carrier, which takes up 3 spaces,"
+      choose_final_ship_placement(choose_axis(3, player), player)
       # 1 Submarine, 3 spots
-      puts "Your Submarine, which also takes up 3 spaces:"
-      choose_axis(3) 
+      puts "Your Submarine, which also takes up 3 spaces,"
+      choose_final_ship_placement(choose_axis(3, player), player) 
       # 1 Patrol Boat, 2 spots
-      puts "Your Patrol Boat, which takes up 5 spaces:"
-      choose_axis(2)
+      puts "Your Patrol Boat, which takes up 2 spaces,"
+      choose_final_ship_placement(choose_axis(2, player), player)
 
       # puts "Choose 17 locations to place a ship"
       # 2.times do |x|
@@ -85,6 +93,35 @@ module Battleship
       #   answer = gets.chomp.upcase
       #   player.table[answer] = "ship"
       # end
+    end
+
+    def choose_final_ship_placement(array, player)
+      puts "This is an array of your placement options based on the axis you chose:"
+      p array
+
+      counter = 1
+      array.each do |x|
+        puts "Type #{counter} to select:"
+        p x
+        counter += 1
+      end
+
+      choose_by_array_index(array, player)
+    end
+
+    def choose_by_array_index(array, player)
+      answer = gets.chomp.to_i
+      num = array.length
+
+      
+      if answer <= num && answer > 0
+        array[answer - 1].each do |x|
+          player.table[x] = 'ship'
+        end
+      else
+        puts "please type a number between 1 and #{num}"
+        choose_by_array_index(array, player)
+      end
     end
 
     def turn
